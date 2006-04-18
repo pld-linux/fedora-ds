@@ -20,6 +20,7 @@ URL:		http://directory.fedora.redhat.com/
 BuildRequires:	rpmbuild(macros) >= 1.228
 Requires(post,preun):	/sbin/chkconfig
 BuildRequires:	db-devel >= 4.0
+BuildRequires:	nspr-devel
 #BuildRequires:	krb-devel
 BuildRequires:	libtermcap-devel
 BuildRequires:	ncurses-devel
@@ -116,7 +117,7 @@ Statyczna biblioteka ....
 
 %build
 #%%configure
-%{__make}
+%{__make} -I/usr/include/nspr/
 
 %install
 rm -rf $RPM_BUILD_ROOT
