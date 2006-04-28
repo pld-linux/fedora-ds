@@ -11,10 +11,11 @@ Group:		Applications
 Source0:	http://directory.fedora.redhat.com/sources/%{name}-%{version}.tar.gz
 # Source0-md5:	d8bd5b68087229b4bb2e3867cb92ba85
 Patch0:		%{name}-make.patch
+Patch1:		%{name}-path.patch
 URL:		http://directory.fedora.redhat.com/
 BuildRequires:	apr-devel
 BuildRequires:	db-devel >= 4.0
-BuildRequires:	libtermcap-devel
+#BuildRequires:	libtermcap-devel
 BuildRequires:	ncurses-devel
 BuildRequires:	nspr-devel
 BuildRequires:	rpmbuild(macros) >= 1.228
@@ -71,10 +72,29 @@ interesuj±ce cechy obejmuj±:
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 #%%configure
-%{__make} -I/usr/include/nspr/
+#MFLAGS="-I/usr/include \
+#	-I/usr/include/nspr \
+#	USE_ADMINSERVER=1 \
+#        USE_CONSOLE=1     \
+#        USE_DSMLGW=1      \
+#        USE_ORGCHART=1    \
+#        USE_DSGW=1        \
+#        USE_JAVATOOLS=1   \
+#        USE_SETUPUTIL=1   "
+#export $(MFLAGS)
+%{__make} 
+#	USE_ADMINSERVER=1 - bundle the Admin Server (required to run Console/webapps)
+#        USE_CONSOLE=1    - bundle the Administration Console (requires Java)
+#        USE_DSMLGW=1     - build/bundle the DSMLv2 Gateway (requires Java)
+#        USE_ORGCHART=1   - build/bundle the Org Chart webapp
+#        USE_DSGW=1       - build/bundle the Phonebook/DS Gateway webapp
+#        USE_JAVATOOLS=1  - build/bundle the Java command line tools
+#        USE_SETUPUTIL=1  - build/bundle programs that use Setuputil
+#
 
 %install
 rm -rf $RPM_BUILD_ROOT
