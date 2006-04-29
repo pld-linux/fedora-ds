@@ -11,7 +11,7 @@ Group:		Applications
 Source0:	http://directory.fedora.redhat.com/sources/%{name}-%{version}.tar.gz
 # Source0-md5:	d8bd5b68087229b4bb2e3867cb92ba85
 Patch0:		%{name}-make.patch
-Patch1:		%{name}-path.patch
+Patch1:		%{name}-included.patch
 URL:		http://directory.fedora.redhat.com/
 BuildRequires:	apr-devel
 BuildRequires:	db-devel >= 4.0
@@ -86,7 +86,14 @@ interesuj±ce cechy obejmuj±:
 #        USE_JAVATOOLS=1   \
 #        USE_SETUPUTIL=1   "
 #export $(MFLAGS)
-%{__make} 
+%{__make} \
+        NSPR_INCDIR=/usr/include/nspr \
+        SECURITY_INCDIR=/usr/include/openssl \
+	DBM_INCLUDE=/usr/include \
+	LDAP_INCLUDE=/usr/include \
+	SASL_INCLUDE=/usr/include/sasl \
+	SVRCORE_INCLUDE=/usr/include
+
 #	USE_ADMINSERVER=1 - bundle the Admin Server (required to run Console/webapps)
 #        USE_CONSOLE=1    - bundle the Administration Console (requires Java)
 #        USE_DSMLGW=1     - build/bundle the DSMLv2 Gateway (requires Java)
