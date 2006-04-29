@@ -35,7 +35,7 @@ BuildRequires:	net-snmp-devel >= 5.2.1
 BuildRequires:	krb5-devel
 BuildRequires:	apache-devel
 BuildRequires:	cyrus-sasl-devel
-BuildRequires:	nss-devel-3.11-1
+BuildRequires:	nss-devel
 BuildRequires:	gdbm-devel >= 1.6
 BuildRequires:	perl-Mozilla-LDAP
 #BuildRequires:	mozilla-components: DBM (v1.61), NSS (v3.93), SVRCORE (v4.0), LDAPSDK (v5.16), and PerLDAP (*)
