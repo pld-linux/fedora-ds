@@ -39,6 +39,7 @@ BuildRequires:	krb5-devel
 BuildRequires:	net-snmp-devel >= 5.2.1
 BuildRequires:	nss-devel
 BuildRequires:	perl-Mozilla-LDAP
+BuildRequires:	mozldap-devel
 Requires:	libicu >= 2.4
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
