@@ -16,12 +16,12 @@ Patch2:		http://directory.fedora.redhat.com/sources/ldapserver-gcc4.patch
 URL:		http://directory.fedora.redhat.com/
 BuildRequires:	apr-devel
 BuildRequires:	db-devel >= 4.0
-BuildRequires:	libtermcap-devel
+BuildRequires:	java-sun
 BuildRequires:	libicu-devel
+BuildRequires:	libtermcap-devel
 BuildRequires:	ncurses-devel
 BuildRequires:	nspr-devel >= 4.4.1
 BuildRequires:	rpmbuild(macros) >= 1.228
-BuildRequires:	java-sun
 #or BuildRequires:	ibm-java-sdk
 #
 #BuildRequires:	Java/XML Components
@@ -30,15 +30,15 @@ BuildRequires:	java-sun
 # activation.jar - http://java.sun.com/products/javabeans/glasgow/jaf.html
 # axrpc-api.jar - http://java.sun.com/webservices/downloads/webservicespack.html
 # crimson.jar - http://xml.apache.org/dist/crimson/
-BuildRequires:	jakarta-ant >= 1.6.1
-BuildRequires:	net-snmp-devel >= 5.2.1
-BuildRequires:	krb5-devel
 BuildRequires:	apache-devel
 BuildRequires:	cyrus-sasl-devel
-BuildRequires:	nss-devel
 BuildRequires:	gdbm-devel >= 1.6
-BuildRequires:	perl-Mozilla-LDAP
+BuildRequires:	jakarta-ant >= 1.6.1
+BuildRequires:	krb5-devel
 #BuildRequires:	mozilla-components: DBM (v1.61), NSS (v3.93), SVRCORE (v4.0), LDAPSDK (v5.16), and PerLDAP (*)
+BuildRequires:	net-snmp-devel >= 5.2.1
+BuildRequires:	nss-devel
+BuildRequires:	perl-Mozilla-LDAP
 Requires:	libicu >= 2.4
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -91,38 +91,38 @@ interesuj±ce cechy obejmuj±:
 %patch1 -p1
 #%patch2 -p1
 
-
 %build
 #%%configure
 %{__make} \
-        NSPR_INCDIR=/usr/include/nspr	\
-        SECURITY_INCDIR=/usr/include/openssl \
-	DBM_INCLUDE=/usr/include	\
-	LDAP_INCLUDE=/usr/include/nss	\
-	SASL_INCLUDE=/usr/include/sasl	\
-	SVRCORE_INCLUDE=/usr/include	\
-	MFLAGS="USE_ADMINSERVER=1	\
-		USE_CONSOLE=1	\
-		USE_DSMLGW=1	\
-		USE_ORGCHART=1	\
-		USE_DSGW=1	\
-		USE_JAVATOOLS=1	\
-		USE_SETUPUTIL=1	\
-		BUILD_RPM=0	\
-		DEBUG=full	\
-		NOJAVA=0	\
-		"
+	NSPR_INCDIR=/usr/include/nspr \
+	SECURITY_INCDIR=/usr/include/openssl \
+	DBM_INCLUDE=/usr/include \
+	LDAP_INCLUDE=/usr/include/nss \
+	SASL_INCLUDE=/usr/include/sasl \
+	SVRCORE_INCLUDE=/usr/include \
+	MFLAGS="\
+		USE_ADMINSERVER=1 \
+		USE_CONSOLE=1 \
+		USE_DSMLGW=1 \
+		USE_ORGCHART=1 \
+		USE_DSGW=1 \
+		USE_JAVATOOLS=1 \
+		USE_SETUPUTIL=1 \
+		BUILD_RPM=0 \
+		DEBUG=full \
+		NOJAVA=0 \
+	"
 #
 #	BUILD_RPM=1 to make a RHEL/Fedora Core RPM package (default is a setuputil installable package).
 #	DEBUG=full to build the debug version (default is optimized).
 #	NOJAVA=1 to skip the Java code, including the console and DSML gateway.
 #	USE_ADMINSERVER=1 - bundle the Admin Server (required to run Console/webapps)
-#        USE_CONSOLE=1    - bundle the Administration Console (requires Java)
-#        USE_DSMLGW=1     - build/bundle the DSMLv2 Gateway (requires Java)
-#        USE_ORGCHART=1   - build/bundle the Org Chart webapp
-#        USE_DSGW=1       - build/bundle the Phonebook/DS Gateway webapp
-#        USE_JAVATOOLS=1  - build/bundle the Java command line tools
-#        USE_SETUPUTIL=1  - build/bundle programs that use Setuputil
+#		USE_CONSOLE=1	- bundle the Administration Console (requires Java)
+#		USE_DSMLGW=1	 - build/bundle the DSMLv2 Gateway (requires Java)
+#		USE_ORGCHART=1   - build/bundle the Org Chart webapp
+#		USE_DSGW=1	   - build/bundle the Phonebook/DS Gateway webapp
+#		USE_JAVATOOLS=1  - build/bundle the Java command line tools
+#		USE_SETUPUTIL=1  - build/bundle programs that use Setuputil
 #
 
 %install
@@ -136,13 +136,3 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-#%doc AUTHORS CREDITS ChangeLog NEWS README THANKS TODO
-#%%dir %{_sysconfdir}
-#%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*
-#%attr(755,root,root) %{_bindir}/*
-#%{_datadir}/%{name}
-
-#%attr(754,root,root) /etc/rc.d/init.d/%{name}
-#%config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/%{name}
-
-#%{_examplesdir}/%{name}-%{version}
