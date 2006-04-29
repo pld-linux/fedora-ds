@@ -89,31 +89,29 @@ interesuj±ce cechy obejmuj±:
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
+#%patch2 -p1
 
 
 %build
 #%%configure
 %{__make} \
-        NSPR_INCDIR=/usr/include/nspr \
+        NSPR_INCDIR=/usr/include/nspr	\
         SECURITY_INCDIR=/usr/include/openssl \
-	DBM_INCLUDE=/usr/include \
-	LDAP_INCLUDE=/usr/include/nss \
-	SASL_INCLUDE=/usr/include/sasl \
-	SVRCORE_INCLUDE=/usr/include
-#MFLAGS="-I/usr/include	\
-#	-I/usr/include/nspr	\
-#	USE_ADMINSERVER=1	\
-#       USE_CONSOLE=1	\
-#       USE_DSMLGW=1	\
-#       USE_ORGCHART=1	\
-#       USE_DSGW=1	\
-#       USE_JAVATOOLS=1	\
-#       USE_SETUPUTIL=1	\
-#	BUILD_RPM=1	\
-#	DEBUG=full	\
-#	NOJAVA=1	\
-#"
+	DBM_INCLUDE=/usr/include	\
+	LDAP_INCLUDE=/usr/include/nss	\
+	SASL_INCLUDE=/usr/include/sasl	\
+	SVRCORE_INCLUDE=/usr/include	\
+	MFLAGS="USE_ADMINSERVER=1	\
+		USE_CONSOLE=1	\
+		USE_DSMLGW=1	\
+		USE_ORGCHART=1	\
+		USE_DSGW=1	\
+		USE_JAVATOOLS=1	\
+		USE_SETUPUTIL=1	\
+		BUILD_RPM=0	\
+		DEBUG=full	\
+		NOJAVA=0	\
+		"
 #
 #	BUILD_RPM=1 to make a RHEL/Fedora Core RPM package (default is a setuputil installable package).
 #	DEBUG=full to build the debug version (default is optimized).
