@@ -12,17 +12,33 @@ Source0:	http://directory.fedora.redhat.com/sources/%{name}-%{version}.tar.gz
 # Source0-md5:	d8bd5b68087229b4bb2e3867cb92ba85
 Patch0:		%{name}-make.patch
 Patch1:		%{name}-included.patch
+Patch2:		http://directory.fedora.redhat.com/sources/ldapserver-gcc4.patch
 URL:		http://directory.fedora.redhat.com/
 BuildRequires:	apr-devel
 BuildRequires:	db-devel >= 4.0
-#BuildRequires:	libtermcap-devel
+BuildRequires:	libtermcap-devel
+BuildRequires:	libicu-devel
 BuildRequires:	ncurses-devel
-BuildRequires:	nspr-devel
+BuildRequires:	nspr-devel >= 4.4.1
 BuildRequires:	rpmbuild(macros) >= 1.228
-#BuildRequires:	java
-#BuildRequires:	ant >= 1.6.1
-#BuildRequires:	krb-devel
-#BuildRequires:	httpd-devel
+BuildRequires:	java-sun
+#or BuildRequires:	ibm-java-sdk
+#
+#BuildRequires:	Java/XML Components
+# axis.jar, jaxrpc.jar, and saaj.jar - http://ws.apache.org/axis/index.html
+# xercesImpl.jar and xml-apis.jar - http://xml.apache.org/xerces2-j/download.cgi
+# activation.jar - http://java.sun.com/products/javabeans/glasgow/jaf.html
+# axrpc-api.jar - http://java.sun.com/webservices/downloads/webservicespack.html
+# crimson.jar - http://xml.apache.org/dist/crimson/
+BuildRequires:	jakarta-ant >= 1.6.1
+BuildRequires:	net-snmp-devel >= 5.2.1
+BuildRequires:	krb5-devel
+BuildRequires:	apache-devel
+BuildRequires:	cyrus-sasl-devel
+BuildRequires:	nss-devel-3.11-1
+BuildRequires:	gdbm-devel >= 1.6
+BuildRequires:	perl-Mozilla-LDAP
+#BuildRequires:	mozilla-components: DBM (v1.61), NSS (v3.93), SVRCORE (v4.0), LDAPSDK (v5.16), and PerLDAP (*)
 Requires:	libicu >= 2.4
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -73,27 +89,35 @@ interesuj±ce cechy obejmuj±:
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
+
 
 %build
 #%%configure
-#MFLAGS="-I/usr/include \
-#	-I/usr/include/nspr \
-#	USE_ADMINSERVER=1 \
-#        USE_CONSOLE=1     \
-#        USE_DSMLGW=1      \
-#        USE_ORGCHART=1    \
-#        USE_DSGW=1        \
-#        USE_JAVATOOLS=1   \
-#        USE_SETUPUTIL=1   "
-#export $(MFLAGS)
 %{__make} \
         NSPR_INCDIR=/usr/include/nspr \
         SECURITY_INCDIR=/usr/include/openssl \
 	DBM_INCLUDE=/usr/include \
-	LDAP_INCLUDE=/usr/include \
+	LDAP_INCLUDE=/usr/include/nss \
 	SASL_INCLUDE=/usr/include/sasl \
 	SVRCORE_INCLUDE=/usr/include
-
+#MFLAGS="-I/usr/include	\
+#	-I/usr/include/nspr	\
+#	USE_ADMINSERVER=1	\
+#       USE_CONSOLE=1	\
+#       USE_DSMLGW=1	\
+#       USE_ORGCHART=1	\
+#       USE_DSGW=1	\
+#       USE_JAVATOOLS=1	\
+#       USE_SETUPUTIL=1	\
+#	BUILD_RPM=1	\
+#	DEBUG=full	\
+#	NOJAVA=1	\
+#"
+#
+#	BUILD_RPM=1 to make a RHEL/Fedora Core RPM package (default is a setuputil installable package).
+#	DEBUG=full to build the debug version (default is optimized).
+#	NOJAVA=1 to skip the Java code, including the console and DSML gateway.
 #	USE_ADMINSERVER=1 - bundle the Admin Server (required to run Console/webapps)
 #        USE_CONSOLE=1    - bundle the Administration Console (requires Java)
 #        USE_DSMLGW=1     - build/bundle the DSMLv2 Gateway (requires Java)
