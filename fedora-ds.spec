@@ -10,9 +10,6 @@ License:	GPL v2
 Group:		Applications
 Source0:	http://directory.fedora.redhat.com/sources/%{name}-%{version}.tar.gz
 # Source0-md5:	d8bd5b68087229b4bb2e3867cb92ba85
-Patch0:		%{name}-make.patch
-Patch1:		%{name}-included.patch
-Patch2:		http://directory.fedora.redhat.com/sources/ldapserver-gcc4.patch
 URL:		http://directory.fedora.redhat.com/
 BuildRequires:	apr-devel
 BuildRequires:	db-devel >= 4.0
@@ -88,19 +85,22 @@ interesuj±ce cechy obejmuj±:
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-#%patch2 -p1
 
 %build
 #%%configure
 %{__make} \
+	MAKE=make \
 	NSPR_INCDIR=/usr/include/nspr \
-	SECURITY_INCDIR=/usr/include/openssl \
-	DBM_INCLUDE=/usr/include \
-	LDAP_INCLUDE=/usr/include/nss \
-	SASL_INCLUDE=/usr/include/sasl \
-	SVRCORE_INCLUDE=/usr/include \
+	SECURITY_INCDIR=/usr/include/nss \
+	DBM_LIBNAMES=gdbm \
+	DB_INCLUDE=/usr/include \
+	GSSAPI_LIBS=-lgssapi \
+	ICU_INCDIR=/usr/include/unicode \
+	LDAPSDK_INCDIR=/usr/include/mozldap \
+	NETSNMP_INCDIR=/usr/include/net-snmp \
+	NETSNMP_LIBNAMES="netsnmp netsnmpagent netsnmpmibs netsnmphelpers rpm sensors" \
+	SASL_INCDIR=/usr/include/sasl \
+	SVRCORE_INCLUDE=-I$PWD/../mozilla/security/svrcore \
 	MFLAGS="\
 		USE_ADMINSERVER=1 \
 		USE_CONSOLE=1 \
