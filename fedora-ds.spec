@@ -11,9 +11,9 @@ Group:		Applications
 Source0:	http://directory.fedora.redhat.com/sources/%{name}-%{version}.tar.gz
 # Source0-md5:	d8bd5b68087229b4bb2e3867cb92ba85
 URL:		http://directory.fedora.redhat.com/
-BuildRequires:	apr-devel
+#BuildRequires:	apr-devel
 BuildRequires:	db-devel >= 4.0
-BuildRequires:	java-sun
+#BuildRequires:	java-sun
 BuildRequires:	libicu-devel
 BuildRequires:	libtermcap-devel
 BuildRequires:	ncurses-devel
@@ -27,16 +27,17 @@ BuildRequires:	rpmbuild(macros) >= 1.228
 # activation.jar - http://java.sun.com/products/javabeans/glasgow/jaf.html
 # axrpc-api.jar - http://java.sun.com/webservices/downloads/webservicespack.html
 # crimson.jar - http://xml.apache.org/dist/crimson/
-BuildRequires:	apache-devel
+#BuildRequires:	apache-devel
 BuildRequires:	cyrus-sasl-devel
 BuildRequires:	gdbm-devel >= 1.6
-BuildRequires:	jakarta-ant >= 1.6.1
-BuildRequires:	krb5-devel
+#BuildRequires:	jakarta-ant >= 1.6.1
+#BuildRequires:	krb5-devel
 #BuildRequires:	mozilla-components: DBM (v1.61), NSS (v3.93), SVRCORE (v4.0), LDAPSDK (v5.16), and PerLDAP (*)
 BuildRequires:	net-snmp-devel >= 5.2.1
 BuildRequires:	nss-devel
-BuildRequires:	perl-Mozilla-LDAP
+#BuildRequires:	perl-Mozilla-LDAP
 BuildRequires:	mozldap-devel
+BuildRequires:	which
 Requires:	libicu >= 2.4
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -87,24 +88,29 @@ interesuj±ce cechy obejmuj±:
 %setup -q
 
 %build
-#%%configure
 %{__make} \
+	CC="%{__cc}" \
+	CXX="%{__cxx}" \
 	MAKE=make \
-	NSPR_INCDIR=/usr/include/nspr \
-	SECURITY_INCDIR=/usr/include/nss \
+	ADMINUTIL_INCPATH=%{_includedir}/libadminutil \
+	ADMINUTIL_LINK=-ladminutil10 \
+	ICU_INCPATH=%{_includedir}/icu \
+	NSPR_INCDIR=%{_includedir}/nspr \
+	SECURITY_INCDIR=%{_includedir}/nss \
+	DBM_INCDIR=%{_includedir} \
 	DBM_LIBNAMES=gdbm \
-	DB_INCLUDE=/usr/include \
+	DB_INCLUDE=%{_includedir} \
 	GSSAPI_LIBS=-lgssapi \
-	ICU_INCDIR=/usr/include/unicode \
-	LDAPSDK_INCDIR=/usr/include/mozldap \
-	NETSNMP_INCDIR=/usr/include/net-snmp \
+	ICU_INCDIR=%{_includedir}/unicode \
+	LDAPSDK_INCDIR=%{_includedir}/mozldap \
+	NETSNMP_INCDIR=%{_includedir}/net-snmp \
 	NETSNMP_LIBNAMES="netsnmp netsnmpagent netsnmpmibs netsnmphelpers rpm sensors" \
-	SASL_INCDIR=/usr/include/sasl \
+	SASL_INCDIR=%{_includedir}/sasl \
 	SVRCORE_INCLUDE=-I$PWD/../mozilla/security/svrcore \
 	MFLAGS="\
 		USE_ADMINSERVER=1 \
 		USE_CONSOLE=1 \
-		USE_DSMLGW=1 \
+		USE_DSMLGW=0 \
 		USE_ORGCHART=1 \
 		USE_DSGW=1 \
 		USE_JAVATOOLS=1 \
