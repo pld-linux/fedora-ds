@@ -13,9 +13,16 @@ Source0:	http://directory.fedora.redhat.com/sources/%{name}-%{version}.tar.gz
 URL:		http://directory.fedora.redhat.com/
 #BuildRequires:	apr-devel
 BuildRequires:	db-devel >= 4.0
+# fake, but required now
+BuildRequires:	db-utils
+BuildRequires:	fedora-adminutil
+BuildRequires:	fedora-setuputil
 #BuildRequires:	java-sun
+#BuildRequires:	libgssapi-devel
 BuildRequires:	libicu-devel
+BuildRequires:	libstdc++-devel
 BuildRequires:	libtermcap-devel
+BuildRequires:	lm_sensors-devel
 BuildRequires:	ncurses-devel
 BuildRequires:	nspr-devel >= 4.4.1
 BuildRequires:	rpmbuild(macros) >= 1.228
@@ -33,11 +40,12 @@ BuildRequires:	gdbm-devel >= 1.6
 #BuildRequires:	jakarta-ant >= 1.6.1
 #BuildRequires:	krb5-devel
 #BuildRequires:	mozilla-components: DBM (v1.61), NSS (v3.93), SVRCORE (v4.0), LDAPSDK (v5.16), and PerLDAP (*)
+BuildRequires:	mozldap-devel
 BuildRequires:	net-snmp-devel >= 5.2.1
 BuildRequires:	nss-devel
 #BuildRequires:	perl-Mozilla-LDAP
-BuildRequires:	mozldap-devel
 BuildRequires:	which
+BuildRequires:	zip
 Requires:	libicu >= 2.4
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -86,57 +94,49 @@ interesuj±ce cechy obejmuj±:
 
 %prep
 %setup -q
+# dirty hack, maybe fedora-adminserver needed
+mkdir -p __admserv/admin
+touch __admserv/setup.inf
 
 %build
 %{__make} \
 	CC="%{__cc}" \
 	CXX="%{__cxx}" \
-	MAKE=make \
+	MAKE=%{__make} \
 	ADMINUTIL_INCPATH=%{_includedir}/libadminutil \
 	ADMINUTIL_LINK=-ladminutil10 \
-	ICU_INCPATH=%{_includedir}/icu \
-	NSPR_INCDIR=%{_includedir}/nspr \
-	SECURITY_INCDIR=%{_includedir}/nss \
+	ADMINSERVER_SUBCOMPS=setup.inf \
+	ADMSERV_DIR=$PWD/__admserv \
+	DB_BINPATH=%{_bindir} \
+	DB_INCLUDE=%{_includedir} \
 	DBM_INCDIR=%{_includedir} \
 	DBM_LIBNAMES=gdbm \
-	DB_INCLUDE=%{_includedir} \
 	GSSAPI_LIBS=-lgssapi \
 	ICU_INCDIR=%{_includedir}/unicode \
+	ICU_INCPATH=%{_includedir}/icu \
 	LDAPSDK_INCDIR=%{_includedir}/mozldap \
 	NETSNMP_INCDIR=%{_includedir}/net-snmp \
 	NETSNMP_LIBNAMES="netsnmp netsnmpagent netsnmpmibs netsnmphelpers rpm sensors" \
+	NSPR_INCDIR=%{_includedir}/nspr \
 	SASL_INCDIR=%{_includedir}/sasl \
+	SECURITY_INCDIR=%{_includedir}/nss \
+	SETUPUTIL_INCDIR=%{_includedir} \
+	SETUPUTIL_BINPATH=%{_bindir} \
 	SVRCORE_INCLUDE=-I$PWD/../mozilla/security/svrcore \
 	MFLAGS="\
 		USE_ADMINSERVER=1 \
-		USE_CONSOLE=1 \
+		USE_CONSOLE=0 \
 		USE_DSMLGW=0 \
 		USE_ORGCHART=1 \
 		USE_DSGW=1 \
-		USE_JAVATOOLS=1 \
+		USE_JAVATOOLS=0 \
 		USE_SETUPUTIL=1 \
-		BUILD_RPM=0 \
+		USE_PERL_FROM_PATH=1 \
 		DEBUG=full \
-		NOJAVA=0 \
-	"
-#
-#	BUILD_RPM=1 to make a RHEL/Fedora Core RPM package (default is a setuputil installable package).
-#	DEBUG=full to build the debug version (default is optimized).
-#	NOJAVA=1 to skip the Java code, including the console and DSML gateway.
-#	USE_ADMINSERVER=1 - bundle the Admin Server (required to run Console/webapps)
-#		USE_CONSOLE=1	- bundle the Administration Console (requires Java)
-#		USE_DSMLGW=1	 - build/bundle the DSMLv2 Gateway (requires Java)
-#		USE_ORGCHART=1   - build/bundle the Org Chart webapp
-#		USE_DSGW=1	   - build/bundle the Phonebook/DS Gateway webapp
-#		USE_JAVATOOLS=1  - build/bundle the Java command line tools
-#		USE_SETUPUTIL=1  - build/bundle programs that use Setuputil
-#
+		NOJAVA=1"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
-%{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT
 
 %clean
 rm -rf $RPM_BUILD_ROOT
