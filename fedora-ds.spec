@@ -12,20 +12,27 @@ Source0:	http://directory.fedora.redhat.com/sources/%{name}-%{version}.tar.gz
 # Source0-md5:	d8bd5b68087229b4bb2e3867cb92ba85
 URL:		http://directory.fedora.redhat.com/
 #BuildRequires:	apr-devel
+BuildRequires:	cyrus-sasl-devel
 BuildRequires:	db-devel >= 4.0
 # fake, but required now
 BuildRequires:	db-utils
 BuildRequires:	fedora-adminutil
 BuildRequires:	fedora-setuputil
+BuildRequires:	gdbm-devel >= 1.6
 #BuildRequires:	java-sun
 #BuildRequires:	libgssapi-devel
 BuildRequires:	libicu-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtermcap-devel
 BuildRequires:	lm_sensors-devel
+BuildRequires:	mozldap-devel >= 5.16
 BuildRequires:	ncurses-devel
+BuildRequires:	net-snmp-devel >= 5.2.1
 BuildRequires:	nspr-devel >= 4.4.1
+BuildRequires:	nss-devel >= 3.9.3
 BuildRequires:	rpmbuild(macros) >= 1.228
+BuildRequires:	which
+BuildRequires:	zip
 #or BuildRequires:	ibm-java-sdk
 #
 #BuildRequires:	Java/XML Components
@@ -35,17 +42,10 @@ BuildRequires:	rpmbuild(macros) >= 1.228
 # axrpc-api.jar - http://java.sun.com/webservices/downloads/webservicespack.html
 # crimson.jar - http://xml.apache.org/dist/crimson/
 #BuildRequires:	apache-devel
-BuildRequires:	cyrus-sasl-devel
-BuildRequires:	gdbm-devel >= 1.6
 #BuildRequires:	jakarta-ant >= 1.6.1
 #BuildRequires:	krb5-devel
 #BuildRequires:	mozilla-components: DBM (v1.61), NSS (v3.93), SVRCORE (v4.0), LDAPSDK (v5.16), and PerLDAP (*)
-BuildRequires:	mozldap-devel
-BuildRequires:	net-snmp-devel >= 5.2.1
-BuildRequires:	nss-devel
 #BuildRequires:	perl-Mozilla-LDAP
-BuildRequires:	which
-BuildRequires:	zip
 Requires:	libicu >= 2.4
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
