@@ -23,7 +23,7 @@ BuildRequires:	gdbm-devel >= 1.6
 BuildRequires:	libicu-devel >= 2.4
 BuildRequires:	libstdc++-devel
 BuildRequires:	lm_sensors-devel
-BuildRequires:	mozldap-devel >= 5.16
+BuildRequires:	mozldap-devel >= 6.0
 BuildRequires:	ncurses-devel
 BuildRequires:	net-snmp-devel >= 5.2.1
 BuildRequires:	nspr-devel >= 1:4.4.1
