@@ -4,36 +4,33 @@
 Summary:	Fedora Directory Server
 Summary(pl):	Fedora Directory Server - serwer us³ug katalogowych
 Name:		fedora-ds
-Version:	1.0.2
+Version:	1.0.4
 Release:	0.1
 License:	GPL v2
 Group:		Applications
 Source0:	http://directory.fedora.redhat.com/sources/%{name}-%{version}.tar.gz
-# Source0-md5:	d8bd5b68087229b4bb2e3867cb92ba85
+# Source0-md5:	fca8c94d2bfdc3a762c0e8b09ab04b09
 URL:		http://directory.fedora.redhat.com/
-#BuildRequires:	apr-devel
-BuildRequires:	cyrus-sasl-devel
+BuildRequires:	cyrus-sasl-devel >= 2.0
 BuildRequires:	db-devel >= 4.0
 # fake, but required now
-BuildRequires:	db-utils
-BuildRequires:	fedora-adminutil
-BuildRequires:	fedora-setuputil
+#BuildRequires:	db-utils
+BuildRequires:	fedora-adminutil >= 1.0
+BuildRequires:	fedora-setuputil >= 1.0
 BuildRequires:	gdbm-devel >= 1.6
 #BuildRequires:	java-sun
 #BuildRequires:	libgssapi-devel
-BuildRequires:	libicu-devel
+BuildRequires:	libicu-devel >= 2.4
 BuildRequires:	libstdc++-devel
-BuildRequires:	libtermcap-devel
 BuildRequires:	lm_sensors-devel
 BuildRequires:	mozldap-devel >= 5.16
 BuildRequires:	ncurses-devel
 BuildRequires:	net-snmp-devel >= 5.2.1
-BuildRequires:	nspr-devel >= 4.4.1
-BuildRequires:	nss-devel >= 3.9.3
+BuildRequires:	nspr-devel >= 1:4.4.1
+BuildRequires:	nss-devel >= 1:3.9.3
 BuildRequires:	rpmbuild(macros) >= 1.228
 BuildRequires:	which
 BuildRequires:	zip
-#or BuildRequires:	ibm-java-sdk
 #
 #BuildRequires:	Java/XML Components
 # axis.jar, jaxrpc.jar, and saaj.jar - http://ws.apache.org/axis/index.html
@@ -46,7 +43,6 @@ BuildRequires:	zip
 #BuildRequires:	krb5-devel
 #BuildRequires:	mozilla-components: DBM (v1.61), NSS (v3.93), SVRCORE (v4.0), LDAPSDK (v5.16), and PerLDAP (*)
 #BuildRequires:	perl-Mozilla-LDAP
-Requires:	libicu >= 2.4
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -99,14 +95,19 @@ mkdir -p __admserv/admin
 touch __admserv/setup.inf
 
 %build
-%{__make} \
+%{__make} buildDirectory \
+	ARCH_DEBUG="%{rpmcflags}" \
+	ARCH_OPT="%{rpmcflags}" \
+	BUILD_DEBUG=%{?debug:full}%{!?debug:optimize} \
 	CC="%{__cc}" \
 	CXX="%{__cxx}" \
 	MAKE=%{__make} \
-	ADMINUTIL_INCPATH=%{_includedir}/libadminutil \
-	ADMINUTIL_LINK=-ladminutil10 \
+	NSOS_TEST=PLD \
+	ADMINUTIL_INCPATH=%{_includedir}/adminutil-1.0 \
+	ADMINUTIL_LINK=-ladminutil \
 	ADMINSERVER_SUBCOMPS=setup.inf \
 	ADMSERV_DIR=$PWD/__admserv \
+	CURSES="-lncurses" \
 	DB_BINPATH=%{_bindir} \
 	DB_INCLUDE=%{_includedir} \
 	DBM_INCDIR=%{_includedir} \
@@ -120,9 +121,9 @@ touch __admserv/setup.inf
 	NSPR_INCDIR=%{_includedir}/nspr \
 	SASL_INCDIR=%{_includedir}/sasl \
 	SECURITY_INCDIR=%{_includedir}/nss \
-	SETUPUTIL_INCDIR=%{_includedir} \
+	SETUPUTIL_INCDIR=/usr/include/fedora-setuputil \
 	SETUPUTIL_BINPATH=%{_bindir} \
-	SVRCORE_INCLUDE=-I$PWD/../mozilla/security/svrcore \
+	SVRCORE_INCLUDE="-I/usr/include/svrcore" \
 	MFLAGS="\
 		USE_ADMINSERVER=1 \
 		USE_CONSOLE=0 \
@@ -132,7 +133,7 @@ touch __admserv/setup.inf
 		USE_JAVATOOLS=0 \
 		USE_SETUPUTIL=1 \
 		USE_PERL_FROM_PATH=1 \
-		DEBUG=full \
+		DEBUG=%{?debug:full}%{!?debug:optimize} \
 		NOJAVA=1"
 
 %install
@@ -141,5 +142,5 @@ rm -rf $RPM_BUILD_ROOT
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files
-%defattr(644,root,root,755)
+#%files
+#%defattr(644,root,root,755)
