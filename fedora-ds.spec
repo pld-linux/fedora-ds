@@ -39,7 +39,7 @@ BuildRequires:	zip
 # axrpc-api.jar - http://java.sun.com/webservices/downloads/webservicespack.html
 # crimson.jar - http://xml.apache.org/dist/crimson/
 #BuildRequires:	apache-devel
-#BuildRequires:	jakarta-ant >= 1.6.1
+#BuildRequires:	ant >= 1.6.1
 #BuildRequires:	krb5-devel
 #BuildRequires:	mozilla-components: DBM (v1.61), NSS (v3.93), SVRCORE (v4.0), LDAPSDK (v5.16), and PerLDAP (*)
 #BuildRequires:	perl-Mozilla-LDAP
