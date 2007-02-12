@@ -2,7 +2,7 @@
 # http://directory.fedora.redhat.com/wiki/Building
 #
 Summary:	Fedora Directory Server
-Summary(pl.UTF-8):   Fedora Directory Server - serwer usług katalogowych
+Summary(pl.UTF-8):	Fedora Directory Server - serwer usług katalogowych
 Name:		fedora-ds
 Version:	1.0.4
 Release:	0.1
