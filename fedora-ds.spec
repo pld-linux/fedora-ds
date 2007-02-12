@@ -2,7 +2,7 @@
 # http://directory.fedora.redhat.com/wiki/Building
 #
 Summary:	Fedora Directory Server
-Summary(pl):	Fedora Directory Server - serwer us³ug katalogowych
+Summary(pl.UTF-8):   Fedora Directory Server - serwer usÅ‚ug katalogowych
 Name:		fedora-ds
 Version:	1.0.4
 Release:	0.1
@@ -66,26 +66,26 @@ interesting features that are included are:
 - Graphical console for all facets of user, group, and server
   management
 
-%description -l pl
-Fedora Directory Server to potê¿ny, posiadaj±cy otwarte ¼ród³a,
-skalowalny serwer zaprojektowany do zarz±dzania du¿ymi katalogami
-u¿ytkowników i zasobów. Jest oparty na otwartym protokole serwerowym
+%description -l pl.UTF-8
+Fedora Directory Server to potÄ™Å¼ny, posiadajÄ…cy otwarte ÅºrÃ³dÅ‚a,
+skalowalny serwer zaprojektowany do zarzÄ…dzania duÅ¼ymi katalogami
+uÅ¼ytkownikÃ³w i zasobÃ³w. Jest oparty na otwartym protokole serwerowym
 LDAP (Lightweight Directory Access Protocol). Fedora Directory Server
-to ¶wiatowej klasy implementacja serwera us³ug katalogowych. Bardziej
-interesuj±ce cechy obejmuj±:
-- 4-stronn± replikacjê multi-master
-- skalowalno¶æ: tysi±ce operacji na sekund±, dziesi±tki tysiêcy
-  jednoczesnych u¿ytkowników, dziesi±tki milionów wpisów, setki
-  gigabajtów danych
-- obs³ugê SSLv3, TLSv1 i SASL do bezpiecznego uwierzytelniania i
-  przesy³ania danych
-- obs³ugê wiêkszo¶ci cech LDAPv3, w tym wielu popularnych opcji i
-  rozszerzeñ
+to Å›wiatowej klasy implementacja serwera usÅ‚ug katalogowych. Bardziej
+interesujÄ…ce cechy obejmujÄ…:
+- 4-stronnÄ… replikacjÄ™ multi-master
+- skalowalnoÅ›Ä‡: tysiÄ…ce operacji na sekundÄ…, dziesiÄ…tki tysiÄ™cy
+  jednoczesnych uÅ¼ytkownikÃ³w, dziesiÄ…tki milionÃ³w wpisÃ³w, setki
+  gigabajtÃ³w danych
+- obsÅ‚ugÄ™ SSLv3, TLSv1 i SASL do bezpiecznego uwierzytelniania i
+  przesyÅ‚ania danych
+- obsÅ‚ugÄ™ wiÄ™kszoÅ›ci cech LDAPv3, w tym wielu popularnych opcji i
+  rozszerzeÅ„
 - uaktualnianie schematu przez LDAP
-- elastyczne informacje o prawach dostêpu w drzewie (ACI - Access
+- elastyczne informacje o prawach dostÄ™pu w drzewie (ACI - Access
   Control Information), uaktualniane przez LDAP
-- konfiguracjê i zarz±dzanie w locie przez LDAP
-- graficzn± konsolê dla wszystkich aspektów zarz±dzania u¿ytkownikami,
+- konfiguracjÄ™ i zarzÄ…dzanie w locie przez LDAP
+- graficznÄ… konsolÄ™ dla wszystkich aspektÃ³w zarzÄ…dzania uÅ¼ytkownikami,
   grupami i serwerem
 
 %prep
