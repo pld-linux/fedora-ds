@@ -19,7 +19,7 @@ BuildRequires:	fedora-adminutil >= 1.0
 BuildRequires:	fedora-setuputil >= 1.0
 BuildRequires:	gdbm-devel >= 1.6
 #BuildRequires:	java-sun
-#BuildRequires:	libgssapi-devel
+#BuildRequires:	libgssglue-devel
 BuildRequires:	libicu-devel >= 2.4
 BuildRequires:	libstdc++-devel
 BuildRequires:	lm_sensors-devel
